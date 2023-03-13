@@ -5,7 +5,7 @@ message(STATUS "src This is PROJECT_SOURCE_DIR dir " ${PROJECT_SOURCE_DIR})
 message(STATUS "src This is CMAKE_SOURCE_DIR dir " ${CMAKE_SOURCE_DIR})
 
 # 定义工程根目录; CMAKE_SOURCE_DIR为内建变量，表示工程根目录的CMakeLists.txt文件路径
-SET(ROOT_DIR ${CMAKE_SOURCE_DIR})
+set(ROOT_DIR ${CMAKE_SOURCE_DIR})
 
 # 指定头文件搜索路径
 include_directories(${ROOT_DIR}/lib)
