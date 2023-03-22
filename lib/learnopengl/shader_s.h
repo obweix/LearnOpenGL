@@ -30,8 +30,6 @@ public:
             std::cout<<fragmentPath<<std::endl;            // open files
             vShaderFile.open(vertexPath);
             fShaderFile.open(fragmentPath);
-            std::cout << "vShaderFile.tellg() = " << vShaderFile.tellg()<<std::endl;
-            std::cout<< "fShaderFile.tellg() = " << fShaderFile.tellg()<<std::endl;
             std::stringstream vShaderStream, fShaderStream;
             // read file's buffer contents into streams
             vShaderStream << vShaderFile.rdbuf();

@@ -14,7 +14,7 @@ SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# 将着色器程序安装到程序的执行目录
+# todo:将着色器程序安装到程序的执行目录
 # aux_source_directory(${ROOT_DIR}/assets assets)
 # install(DIRECTORY ${ROOT_DIR}/assets/ DESTINATION ${PROJECT_BINARY_DIR}/bin)
 
@@ -114,6 +114,8 @@ CopyIfDifferent(CopyShaders
     FILES
         ${ROOT_DIR}/assets/3.3.shader.vs
         ${ROOT_DIR}/assets/3.3.shader.fs
+        ${ROOT_DIR}/assets/4.1.texture.fs
+        ${ROOT_DIR}/assets/4.1.texture.vs
 )
 add_dependencies(LearnOpenGL CopyShaders)
 
