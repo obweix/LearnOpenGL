@@ -116,6 +116,8 @@ CopyIfDifferent(CopyShaders
         ${ROOT_DIR}/assets/3.3.shader.fs
         ${ROOT_DIR}/assets/4.1.texture.fs
         ${ROOT_DIR}/assets/4.1.texture.vs
+        ${ROOT_DIR}/assets/6.1.coordinate_systems.fs
+        ${ROOT_DIR}/assets/6.1.coordinate_systems.vs
 )
 add_dependencies(LearnOpenGL CopyShaders)
 
