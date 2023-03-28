@@ -16,11 +16,11 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 960;
+const unsigned int SCR_HEIGHT = 540;
 
 std::string GLOBAL_EXE_DIR;
-std::string PIC_1_LOCATION ="/Users/wbxie/userwbxie/code/LearnOpenGL/assets/test.jpg";
+std::string PIC_1_LOCATION ="/Users/wbxie/userwbxie/code/LearnOpenGL/assets/test1.png";
 
 int main(int argc, char * argv[])
 {
@@ -167,9 +167,16 @@ int main(int argc, char * argv[])
     stbi_set_flip_vertically_on_load(true);
     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
     unsigned char *data = stbi_load(PIC_1_LOCATION.c_str(), &width, &height, &nrChannels, 0);
+    std::cout<< "nrChannels = " << nrChannels << std::endl;
     if (data)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        if(3 == nrChannels)
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+        }else if(4 == nrChannels){
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        }
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -228,7 +235,7 @@ int main(int argc, char * argv[])
             model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * i;
             // model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+            model = glm::rotate(model, (float)glfwGetTime() * glm::radians(angle), glm::vec3(0.5f, 1.0f, 0.0f));
             ourShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
