@@ -19,6 +19,15 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 960;
 const unsigned int SCR_HEIGHT = 540;
 
+// camera
+glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+
+// timing
+float deltaTime = 0.0f;	// time between current frame and last frame
+float lastFrame = 0.0f;
+
 std::string GLOBAL_EXE_DIR;
 std::string PIC_1_LOCATION ="/Users/wbxie/userwbxie/code/LearnOpenGL/assets/test1.png";
 
@@ -198,11 +207,23 @@ int main(int argc, char * argv[])
         glm::vec3(-1.3f,  1.0f, -1.5f)  
     };
 
+    // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
+    // -----------------------------------------------------------------------------------------------------------
+    ourShader.use();
+    glm::mat4 projection    = glm::mat4(1.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    ourShader.setMat4("projection", projection); 
 
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
+        // per-frame time logic
+        // --------------------
+        float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         // input
         // -----
         processInput(window);
@@ -217,16 +238,11 @@ int main(int argc, char * argv[])
 
         // activate shader
         ourShader.use();
-      
-        // create transformations
-        glm::mat4 view          = glm::mat4(1.0f);
-        glm::mat4 projection    = glm::mat4(1.0f);
-        view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-          // pass transformation matrices to the shader
-        ourShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
-        ourShader.setMat4("view", view);
 
+         // camera/view transformation
+        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        ourShader.setMat4("view", view);
+      
         glBindVertexArray(VAO);
         for(unsigned int i = 0; i < 10; i++)
         {
@@ -234,7 +250,7 @@ int main(int argc, char * argv[])
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * i;
-            // model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             model = glm::rotate(model, (float)glfwGetTime() * glm::radians(angle), glm::vec3(0.5f, 1.0f, 0.0f));
             ourShader.setMat4("model", model);
 
@@ -270,6 +286,16 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    float cameraSpeed = static_cast<float>(2.5 * deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
