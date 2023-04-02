@@ -123,7 +123,9 @@ CopyIfDifferent(CopyShaders
         ${ROOT_DIR}/assets/2.1.basic_lighting.fs
         ${ROOT_DIR}/assets/2.1.light_cube.vs
         ${ROOT_DIR}/assets/2.1.light_cube.fs
+        ${ROOT_DIR}/assets/4.2.lighting_maps.vs
+        ${ROOT_DIR}/assets/4.2.lighting_maps.fs
+        ${ROOT_DIR}/assets/4.2.light_cube.vs
+        ${ROOT_DIR}/assets/4.2.light_cube.fs
 )
 add_dependencies(LearnOpenGL CopyShaders)
-
- 

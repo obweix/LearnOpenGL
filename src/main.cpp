@@ -10,17 +10,24 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
-#include <learnopengl/basic_lighting_diffuse.h>
+
+// #include <learnopengl/basic_lighting_diffuse.h>
+#include <learnopengl/lighting_maps_specular.h>
 
 std::string GLOBAL_EXE_DIR;
 std::string PIC_1_LOCATION = "/Users/wbxie/userwbxie/code/LearnOpenGL/assets/test1.png";
+std::string PIC_PATH = "/Users/wbxie/userwbxie/code/LearnOpenGL/assets/";
 
 int main(int argc, char *argv[])
 {
     GLOBAL_EXE_DIR = argv[0];
     GLOBAL_EXE_DIR = GLOBAL_EXE_DIR.substr(0, GLOBAL_EXE_DIR.find_last_of("/") + 1);
 
-    test(GLOBAL_EXE_DIR,PIC_1_LOCATION);
+
+    // 光照贴图
+    test_lighting_maps_specular(GLOBAL_EXE_DIR,PIC_PATH);
+
+
     return 0;
 }
 
