@@ -99,6 +99,7 @@ endfunction()
 
 # 指定头文件搜索路径
 include_directories(${ROOT_DIR}/lib)
+include_directories(${ROOT_DIR}/include)
 
 
 # 指定引用的外部库的搜索路径
@@ -118,6 +119,10 @@ CopyIfDifferent(CopyShaders
         ${ROOT_DIR}/assets/4.1.texture.vs
         ${ROOT_DIR}/assets/6.1.coordinate_systems.fs
         ${ROOT_DIR}/assets/6.1.coordinate_systems.vs
+        ${ROOT_DIR}/assets/2.1.basic_lighting.vs
+        ${ROOT_DIR}/assets/2.1.basic_lighting.fs
+        ${ROOT_DIR}/assets/2.1.light_cube.vs
+        ${ROOT_DIR}/assets/2.1.light_cube.fs
 )
 add_dependencies(LearnOpenGL CopyShaders)
 
