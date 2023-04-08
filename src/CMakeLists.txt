@@ -65,11 +65,12 @@ function(CopyIfDifferent targetName_)
     get_filename_component(output_directory_ ${arg_OUTPUT_DIRECTORY}
         ABSOLUTE ${CMAKE_CURRENT_BINARY_DIR}
     )
-    # message(STATUS "output_directory_ = ${output_directory_}")
+    message(STATUS "output_directory_ = ${output_directory_}")
     set(outputs_)
     foreach(file_ IN LISTS arg_FILES)
         get_filename_component(file_name_ "${file_}" NAME)
         list(APPEND outputs_ "${output_directory_}/${file_name_}")
+        message(STATUS "file name = ${output_directory_}/${file_name_}")
     endforeach()
 
     add_custom_command(OUTPUT ${outputs_} ${CMAKE_COMMAND} -E copy_if_different)
@@ -104,11 +105,13 @@ include_directories(${ROOT_DIR}/include)
 
 # 指定引用的外部库的搜索路径
 link_directories(${ROOT_DIR}/lib/lib-arm64)
+link_directories(${ROOT_DIR}/lib/lib-assimp)
 
 # add_executable(LearnOpenGL main.cpp glad.c)
 aux_source_directory(./ src)
 add_executable(LearnOpenGL ${src})
-target_link_libraries(LearnOpenGL libglfw.3.dylib) 
+target_link_libraries(LearnOpenGL libglfw.3.dylib libassimp.dylib) 
+
 
 CopyIfDifferent(CopyShaders
     OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin
@@ -127,5 +130,25 @@ CopyIfDifferent(CopyShaders
         ${ROOT_DIR}/assets/4.2.lighting_maps.fs
         ${ROOT_DIR}/assets/4.2.light_cube.vs
         ${ROOT_DIR}/assets/4.2.light_cube.fs
+        ${ROOT_DIR}/assets/1.model_loading.fs
+        ${ROOT_DIR}/assets/1.model_loading.vs
 )
+
+# copy mode resource to output directory
+# ---------------------------------------------
+# Set the source and destination directories
+set(SOURCE_DIR "${ROOT_DIR}/assets/nanosuit")
+set(DEST_DIR "${PROJECT_BINARY_DIR}/bin/n")
+message(STATUS "----- ${SOURCE_DIR}")
+message(STATUS "----- ${DEST_DIR}")
+
+# Get a list of all files in the source directory
+file(GLOB FILES_TO_COPY "${SOURCE_DIR}/*")
+
+# Copy each file to the destination directory
+foreach(FILE ${FILES_TO_COPY})
+    file(COPY ${FILE} DESTINATION ${DEST_DIR})
+endforeach()
+# ---------------------------------------------
+
 add_dependencies(LearnOpenGL CopyShaders)

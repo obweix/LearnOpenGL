@@ -12,7 +12,9 @@
 #include <iostream>
 
 // #include <learnopengl/basic_lighting_diffuse.h>
-#include <learnopengl/lighting_maps_specular.h>
+// #include <learnopengl/lighting_maps_specular.h>
+
+#include <learnopengl/model_loading_test.h>
 
 std::string GLOBAL_EXE_DIR;
 std::string PIC_1_LOCATION = "/Users/wbxie/userwbxie/code/LearnOpenGL/assets/test1.png";
@@ -25,7 +27,9 @@ int main(int argc, char *argv[])
 
 
     // 光照贴图
-    test_lighting_maps_specular(GLOBAL_EXE_DIR,PIC_PATH);
+    // test_lighting_maps_specular(GLOBAL_EXE_DIR,PIC_PATH);
+
+    model_loading_test(GLOBAL_EXE_DIR);
 
 
     return 0;
