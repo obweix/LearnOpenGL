@@ -138,7 +138,7 @@ CopyIfDifferent(CopyShaders
 # ---------------------------------------------
 # Set the source and destination directories
 set(SOURCE_DIR "${ROOT_DIR}/assets/nanosuit")
-set(DEST_DIR "${PROJECT_BINARY_DIR}/bin/n")
+set(DEST_DIR "${PROJECT_BINARY_DIR}/bin/nanosuit")
 message(STATUS "----- ${SOURCE_DIR}")
 message(STATUS "----- ${DEST_DIR}")
 
